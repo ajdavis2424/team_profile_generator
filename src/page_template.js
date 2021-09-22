@@ -1,7 +1,22 @@
 // export function to generate entire page
+const generateTeam = team => {
+    const generateManager = (manager) => {
+        return `
+        <h2 class="card-title">${manager.name}</h2>
+        <ul class="list-group">
+                <li class="list-group-item">ID: ${manager.id}</li>
+                <li class="list-group-item">Email: <a href="mailto:${manager.email}">${manager.email}</a></li>
+        </ul>
+        `;
+    };
+
+// GENERATE MANGER WILL
+    const htmlArr = [generateManager(team[0]), "bar"];
+
+return htmlArr.join("");
+};
+
 module.exports = team => {
-
-
 return `
     <!DOCTYPE html>
 <html lang="en">
@@ -36,3 +51,4 @@ return `
 </html>
     `;
 };
+
