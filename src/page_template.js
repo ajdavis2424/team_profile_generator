@@ -3,30 +3,32 @@
 const generateTeam = team => {
     const generateManager = (manager) => {
         return `
-        <h2 class="card-title">${manager.name}</h2>
+        <h2 class="card-title">${manager.getName()}</h2>
         <ul class="list-group">
-                <li class="list-group-item">ID: ${manager.id}</li>
-                <li class="list-group-item">Email: <a href="mailto:${manager.email}">${manager.email}</a></li>
+                <li class="list-group-item">ID: ${manager.getId()}</li>
+                <li class="list-group-item">Email: <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></li>
         </ul>
         `;
     };
 
     const generateEngineer = (engineer) => {
         return `
-        <h2 class="card-title">${engineer.name}</h2>
+        <h2 class="card-title">${engineer.getName()}</h2>
         <ul class="list-group">
-                <li class="list-group-item">ID: ${engineer.id}</li>
-                <li class="list-group-item">Email: <a href="mailto:${engineer.email}">${engineer.email}</a></li>
+                <li class="list-group-item">ID: ${engineer.getId()}</li>
+                <li class="list-group-item">Email: <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></li>
+                <li class="list-group-item">Github: ${engineer.getGithub()}</li>
         </ul>
         `;
     };
 
     const generateIntern = (intern) => {
         return `
-        <h2 class="card-title">${intern.name}</h2>
+        <h2 class="card-title">${intern.getName()}</h2>
         <ul class="list-group">
-                <li class="list-group-item">ID: ${intern.id}</li>
-                <li class="list-group-item">Email: <a href="mailto:${intern.email}">${intern.email}</a></li>
+                <li class="list-group-item">ID: ${intern.getId()}</li>
+                <li class="list-group-item">Email: <a href="mailto:${intern.getEmail()}">${intern.getEmail()}</a></li>
+                <li class="list-group-item">School: ${intern.getSchool()}</li>
         </ul>
         `;
     };
@@ -35,21 +37,21 @@ const generateTeam = team => {
     const htmlArr = []
     htmlArr.push(
         team
-        .filter((employee) => employee.role === "manager")
+        .filter((employee) => employee.getRole() === "Manager")
         .map((manager) => generateManager(manager))
         .join("")
         );
         
         htmlArr.push(
             team
-            .filter((employee) => employee.role === "engineer")
+            .filter((employee) => employee.getRole() === "Engineer")
             .map((engineer) => generateEngineer(engineer))
             .join("")
             );
 
             htmlArr.push(
                 team
-                .filter((employee) => employee.role === "intern")
+                .filter((employee) => employee.getRole() === "Intern")
                 .map((intern) => generateIntern(intern))
                 .join("")
                 );
@@ -86,7 +88,6 @@ return `
     <div class="container">
         <div class="row">
             <div class="team-area col-12 d-flex justify-content-center">
-            // GENERATE MARK UP HERE
             ${generateTeam(team)}
             </div>
         </div>
