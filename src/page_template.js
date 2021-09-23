@@ -1,4 +1,5 @@
 // export function to generate entire page
+// CREATED MARKUP
 const generateTeam = team => {
     const generateManager = (manager) => {
         return `
@@ -10,10 +11,52 @@ const generateTeam = team => {
         `;
     };
 
-// GENERATE MANGER WILL
-    const htmlArr = [generateManager(team[0]), "bar"];
+    const generateEngineer = (engineer) => {
+        return `
+        <h2 class="card-title">${engineer.name}</h2>
+        <ul class="list-group">
+                <li class="list-group-item">ID: ${engineer.id}</li>
+                <li class="list-group-item">Email: <a href="mailto:${engineer.email}">${engineer.email}</a></li>
+        </ul>
+        `;
+    };
 
-return htmlArr.join("");
+    const generateIntern = (intern) => {
+        return `
+        <h2 class="card-title">${intern.name}</h2>
+        <ul class="list-group">
+                <li class="list-group-item">ID: ${intern.id}</li>
+                <li class="list-group-item">Email: <a href="mailto:${intern.email}">${intern.email}</a></li>
+        </ul>
+        `;
+    };
+
+// FIltering manger role from team--  mapping over that returning an array-- 
+    const htmlArr = []
+    htmlArr.push(
+        team
+        .filter((employee) => employee.role === "manager")
+        .map((manager) => generateManager(manager))
+        .join("")
+        );
+        
+        htmlArr.push(
+            team
+            .filter((employee) => employee.role === "engineer")
+            .map((engineer) => generateEngineer(engineer))
+            .join("")
+            );
+
+            htmlArr.push(
+                team
+                .filter((employee) => employee.role === "intern")
+                .map((intern) => generateIntern(intern))
+                .join("")
+                );
+    // const htmlArr = [generateManager(team[0]), generateEngineer(team[1])];
+
+// JOINED MARKUP
+    return htmlArr.join("");
 };
 
 module.exports = team => {
@@ -43,7 +86,8 @@ return `
     <div class="container">
         <div class="row">
             <div class="team-area col-12 d-flex justify-content-center">
-                ${generateTeam(team)}
+            // GENERATE MARK UP HERE
+            ${generateTeam(team)}
             </div>
         </div>
     </div>
