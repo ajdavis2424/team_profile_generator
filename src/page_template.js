@@ -32,7 +32,7 @@ const generateTeam = team => {
         </ul>
         `;
     };
-
+// console.log("team", team);
 // FIltering manger role from team--  mapping over that returning an array-- 
     const htmlArr = []
     htmlArr.push(
