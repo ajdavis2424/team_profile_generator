@@ -1,10 +1,18 @@
 const Manager = require("../lib/Manager");
 
-test("Can get office number via getOfficeNumber()", () => {
-    const testValue = 4;
-    const e = new Manager(testValue);
-    expect(e.getOfficeNumber()).toBe(testValue);
-});
+describe("Manager",() => {
+    test("Can we instantiate Manager Instance",() => {
+        const type = new Manager();
+        expect(typeof type).toBe(`object`);
+    })
+})
+
+describe("Manager Name",() => {
+    test("Is Manager Name a usable String",() => {
+        const name = Manager.name;
+        expect(typeof name).toBe("string");
+    })
+})
 
 // test("Can get ID via constructor argument", () => {
 //     const testValue = 100;
