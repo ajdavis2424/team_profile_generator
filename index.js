@@ -16,12 +16,14 @@ const Intern = require("./lib/Intern");
 const { inherits } = require("util");
 const inquirer = require("inquirer");
 // const { isTypedArray } = require("util/types");
+// const { isTypedArray } = require("util/types"); idArray
 
 // OUTPUT DIRECTORY-- resolve from computer to directory you want it to go
 const OUTPUT_DIR = path.resolve(__dirname, "dist")
 const outputPath = path.join(OUTPUT_DIR, "index.html");
 
-const team = []
+const team = [];
+const idArray =[];
 function writeFile(team){
 // WRITE TO FILE
 fs.writeFileSync(outputPath, render(team), "utf-8");
@@ -43,7 +45,7 @@ function init(){
         },
         {
             type: "input",
-            name: "managerID",
+            name: "managerId",
             message:"what is the team manager's ID number?",
             validate: answer => {
                 const pass = answer.match(
@@ -91,8 +93,8 @@ function init(){
             answers.managerEmail, 
             answers.managerOfficeNumber);
         team.push(manager);
-        writeFile(team)
-        // isTypedArray.push(answers.managerId);
+        // writeFile(team)
+        // isTypedArray.push(answers.managerId); idArray
         createTeam();
 
     });
@@ -119,11 +121,139 @@ function createTeam(){
                     addIntern();
                     break;
                     default:
-                        buildTeam();
+                    writeFile(team);   
+                    // buildTeam();
         }
     });
 }
 
+    function addEngineer() {
+        
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "engineerName",
+                message: "what is the engineer's name?",
+                validate: answer => {
+                if (answer !==""){
+                    return true;
+                }
+                return "Please enter at least one character";
+            }
+        },
+        {
+                type: "input",
+                name: "engineerId",
+                message: "what is the engineer's id?",
+                validate: answer => {
+                    const pass = answer.match(
+                        /^[1-9]\d*$/
+                        );
+                        if (pass) {
+                            if(idArray.includes(answer)){
+                                return "This ID is already taken. Please select a differnet number...";
+                            }   else{
+                                return true;
+                            }
+                    }
+                    return "Please enter a positive number greater than zero";
+                }
+            },
+            {
+                    type: "input",
+                    name: "engineerEmail",
+                    message: "What is the engineer's email?",
+                    validate: answer => {
+                        const pass = answer.match(
+                            /\S+@\S+\.\S+/);
+                            if (pass) {
+                                return true;
+                                 }   
+                                 return "Please enter a vild email address";
+                            }
+                    },
+                    {
+                            type: "input",
+                            name: "engineerGithub",
+                            message: "what is the engineer's Github username?",
+                            validate: answer => {
+                                if (answer !==""){
+                                    return true;
+                                }
+                                return "Please enter at least one character";
+                            }
+                        }
+        ]).then(answers => {
+            const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub)
+            team.push(engineer);
+            idArray.push(answers.engineerId);
+            createTeam();
+        })
+    }
+
+    function addIntern() {
+        
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "internName",
+                message: "what is the Intern's name?",
+                validate: answer => {
+                if (answer !==""){
+                    return true;
+                }
+                return "Please enter at least one character";
+            }
+        },
+        {
+                type: "input",
+                name: "internId",
+                message: "what is the engineer's id?",
+                validate: answer => {
+                    const pass = answer.match(
+                        /^[1-9]\d*$/
+                        );
+                        if (pass) {
+                            if(idArray.includes(answer)){
+                                return "This ID is already taken. Please select a differnet number...";
+                            }   else{
+                                return true;
+                            }
+                    }
+                    return "Please enter a positive number greater than zero";
+                }
+            },
+            {
+                    type: "input",
+                    name: "internEmail",
+                    message: "What is the Intern's email?",
+                    validate: answer => {
+                        const pass = answer.match(
+                            /\S+@\S+\.\S+/);
+                            if (pass) {
+                                return true;
+                                 }   
+                                 return "Please enter a vild email address";
+                            }
+                    },
+                    {
+                            type: "input",
+                            name: "internSchool",
+                            message: "what is the intern's school?",
+                            validate: answer => {
+                                if (answer !==""){
+                                    return true;
+                                }
+                                return "Please enter a college or university";
+                            }
+                        }
+        ]).then(answers => {
+            const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool)
+            team.push(intern);
+            idArray.push(answers.internSchool);
+            createTeam();
+        })
+    }
 
 // Array of classes below
 // const team = [
